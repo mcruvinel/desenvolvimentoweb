@@ -26,6 +26,56 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
+
+function JsonGenerator() {
+  const [data, setData] = useState({
+    name: '',
+    age: '',
+    email: ''
+  });
+
+  const [jsonResult, setJsonResult] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const generateJSON = () => {
+    const jsonData = JSON.stringify(data, null, 2);
+    setJsonResult(jsonData);
+  };
+
+  return (
+    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+      <h2 style={{ textAlign: 'center' }}>Cadastro</h2>
+      <div style={{ marginBottom: '10px' }}>
+        <label>Nome:</label>
+        <input type="text" name="name" value={data.nome} onChange={handleChange} style={{ width: '100%', padding: '5px' }} />
+      </div>
+      <div style={{ marginBottom: '10px' }}>
+        <label>Idade:</label>
+        <input type="number" name="age" value={data.idade} onChange={handleChange} style={{ width: '100%', padding: '5px' }} />
+      </div>
+      <div style={{ marginBottom: '10px' }}>
+        <label>Email:</label>
+        <input type="email" name="email" value={data.email} onChange={handleChange} style={{ width: '100%', padding: '5px' }} />
+      </div>
+      <button onClick={generateJSON} style={{ width: '100%', padding: '10px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Concluir</button>
+      {jsonResult && (
+        <div>
+          <h3 style={{ textAlign: 'center' }}>Dados do cadastro:</h3>
+          <pre>{jsonResult}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
   
 
 function Home() {
@@ -250,12 +300,12 @@ Rio de Janeiro é um município brasileiro, capital do estado homônimo, situado
        
       </Row>
     </Container>
-    
-
-    
+    <Row>
+          <Col>
+            <JsonGenerator />
+          </Col>
+        </Row>
     </>
-    
-    
     );
 }
 
